@@ -51,7 +51,7 @@ engage.users.identify({
 If you need to add new attributes or update an existing attribute, you can use the `add_attribute` method. 
 
 ```python
-engage.user.add_attribute(user_id, {
+engage.users.add_attribute(user_id, {
   'first_name': 'Dan',
   'plan': 'Premium'
 })
