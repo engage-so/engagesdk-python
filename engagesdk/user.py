@@ -26,7 +26,6 @@ class UserResource(EngageBase):
         formatted_data = UserResource.format_user_data(data)
         id = formatted_data.pop('id')
         url = f'/users/{id}'
-        print(EngageBase)
 
         return cls().requests.put(url, data=formatted_data)
 
