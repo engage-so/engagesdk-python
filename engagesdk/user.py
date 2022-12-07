@@ -92,7 +92,117 @@ class UserResource(EngageBase):
         url = f'/users/{uid}/events'
 
         return cls().requests.post(url, data=formatted_data)
+     
+    """
+    Add to account
+
+    :param uid: The user id
+    :type data: string
+
+    :param aid: The account id
+    :type data: string
+    """
+    @classmethod
+    def add_to_account(cls, user_id, account_id, role):
+        if not user_id:
+            raise EngageError("User id missing")
         
+        if not account_id:
+            raise EngageError("Account id missing")
+        
+        if role and not isinstance(role, str):
+            raise EngageError("The role has to be a string")
+        
+        role_dict = {
+            "id": account_id
+        }
+        if role:
+            role_dict.update({"role": role})
+
+        url = f'/users/{user_id}/accounts'
+
+        return cls().requests.post(url, data={"accounts": [role_dict]})
+    
+    """
+    Remove from account
+
+    :param uid: The user id
+    :type data: string
+
+    :param aid: The account id
+    :type data: string
+    """
+    @classmethod
+    def remove_from_account(cls, user_id, account_id):
+        if not user_id:
+            raise EngageError("User id missing")
+        
+        if not account_id:
+            raise EngageError("Account id missing")
+        
+        url = f'/users/{user_id}/accounts/{account_id}'
+
+        return cls().requests.delete(url)
+    
+    """
+    Change account role
+
+    :param uid: The user id
+    :type data: string
+
+    :param aid: The account id
+    :type data: string
+    """
+    @classmethod
+    def change_account_role(cls, user_id, account_id, role):
+        if not user_id:
+            raise EngageError("User id missing")
+        
+        if not account_id:
+            raise EngageError("Account id missing")
+        
+        if role and not isinstance(role, str):
+            raise EngageError("The role has to be a string")
+        
+        url = f'/users/{user_id}/accounts/{account_id}'
+
+        return cls().requests.put(url, data={"role": role})
+    
+    """
+    Convert to customer
+
+    :param uid: The user id
+    :type data: string
+
+    :param aid: The account id
+    :type data: string
+    """
+    @classmethod
+    def convert_to_customer(cls, user_id):
+        if not user_id:
+            raise EngageError("User id missing")
+        
+        url = f'/users/{user_id}/convert'
+
+        return cls().requests.post(url, data={ 'type': 'customer' })
+
+    """
+    Convert to account
+
+    :param uid: The user id
+    :type data: string
+
+    :param aid: The account id
+    :type data: string
+    """
+    @classmethod
+    def convert_to_account(cls, user_id):
+        if not user_id:
+            raise EngageError("User id missing")
+        
+        url = f'/users/{user_id}/convert'
+
+        return cls().requests.post(url, data={ 'type': 'account' })
     
     """
     Takes in Data and formats it to fit engage standard and meta attribute structure
@@ -101,12 +211,16 @@ class UserResource(EngageBase):
     """
     @staticmethod
     def format_user_data(data):
-        standard_attributes = ['id','email','number','first_name','last_name','device_token','device_platform','created_at']
+        standard_attributes = ['id','email','number','first_name','last_name','device_token','device_platform','created_at','is_account','lists']
         formatted_data = {
             'meta': {}
         }
         for attr in data:
             if attr in standard_attributes:
+                if attr == 'lists':
+                    if not type(data[attr]).__name__ == 'lists':
+                        raise EngageError("Please pass an array of lists")
+
                 formatted_data.update({attr: data[attr]})
                 continue
             if attr == 'meta':

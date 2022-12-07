@@ -77,3 +77,12 @@ class EngageRequests:
     """
     def put(self, endpoint, **kwargs):
         return self._request(requests.put, endpoint, **kwargs)
+    
+    """
+    Delete a resource
+	
+    :param endpoint: resource endpoint
+    :type: string
+    """
+    def delete(self, endpoint, **kwargs):
+        return self._request(requests.delete, endpoint, **kwargs)
