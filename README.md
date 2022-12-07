@@ -40,6 +40,7 @@ engage.users.identify({
 - `first_name`
 - `last_name`
 - `email`
+- `is_account`
 - `number` (with international dialing code without the +)
 - `created_at` (represents when the user registered on your platform. If not added, Engage sets it to the current timestamp.)
 - `device_platform`
@@ -92,6 +93,46 @@ engage.users.track(user_id, {
     'amount': 12.99
   }
 })
+```
+
+## Convert User to Account
+
+Converts a Customer to Account
+
+```python
+engage.users.convert_to_account(user_id)
+```
+
+## Convert User to Customer
+
+Converts a Customer to Customer
+
+```python
+engage.users.convert_to_customer(user_id)
+```
+
+## Add user to an account
+
+This adds a user to an account if it exists
+
+```python
+engage.users.add_to_account(user_id= "uid", account_id= "aid", role="developer")
+```
+
+## Change an users role in an account
+
+This changes a users role in an account
+
+```python
+engage.users.change_account_role(user_id= "uid", account_id= "aid", role="admin")
+```
+
+## Remove a user from an account
+
+This removes a user from an account
+
+```python
+engage.users.remove_from_account(user_id= "uid", account_id= "aid")
 ```
 
 ## License
