@@ -1,8 +1,14 @@
+import pathlib
 from setuptools import setup, find_packages
 from engagesdk.version import __version__
 
 DESCRIPTION = 'Engage python SDK'
-LONG_DESCRIPTION = 'Engage SDK to capture and send user attributes and events to Engage'
+
+# The directory containing this file
+HERE = pathlib.Path(__file__).parent
+
+# The text of the README.md file
+README = (HERE / "README.md").read_text()
 
 # Setting up
 setup(
@@ -11,7 +17,8 @@ setup(
         author="Francis Onyishi",
         author_email="francis@engage.so",
         description=DESCRIPTION,
-        long_description=LONG_DESCRIPTION,
+        long_description=README,
+        long_description_content_type="text/markdown",
         packages=find_packages(exclude=['test']),
         install_requires=['requests'],
         
