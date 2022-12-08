@@ -119,9 +119,9 @@ This adds a user to an account if it exists
 engage.users.add_to_account(user_id= "uid", account_id= "aid", role="developer")
 ```
 
-## Change an users role in an account
+## Change a user's role in an account
 
-This changes a users role in an account
+This changes a user's role in an account
 
 ```python
 engage.users.change_account_role(user_id= "uid", account_id= "aid", role="admin")
